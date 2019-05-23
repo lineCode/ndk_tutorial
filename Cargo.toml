@@ -1,0 +1,13 @@
+[package]
+name = "ndk_tutorial"
+version = "0.1.0"
+authors = ["paul <xx@qq.com>"]
+edition = "2018"
+
+[target.'cfg(target_os="android")'.dependencies]
+jni = { version = "0.12.2", default-features = false }
+rayon = "1.0.3"
+
+[lib]
+name = "greetings"
+crate-type = ["staticlib", "cdylib"]
