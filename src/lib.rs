@@ -1,6 +1,8 @@
 use std::ffi::{CStr, CString};
 use std::os::raw::c_char;
 use rayon::prelude::*;
+use reqwest;
+use std::collections::HashMap;
 
 fn sum_of_squares() -> i32 {
     (0..100000).into_par_iter().map(|x| x * 2).sum()
@@ -13,10 +15,12 @@ pub extern "C" fn rust_greeting(to: *const c_char) -> *mut c_char {
         Err(_) => "there",
         Ok(string) => string,
     };
-
     let n = sum_of_squares();
     let s = format!("{}", n);
-    CString::new(s + recipient)
+    let resp: HashMap<String, String> = reqwest::get("https://www.csdn.net")?
+        .json()?;
+    let s1 = format!("{:#?}", resp);
+    CString::new(s1 + recipient)
         .unwrap()
         .into_raw()
 }
