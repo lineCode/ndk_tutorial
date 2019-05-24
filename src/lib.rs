@@ -17,8 +17,8 @@ pub extern "C" fn rust_greeting(to: *const c_char) -> *mut c_char {
     };
     let n = sum_of_squares();
     let s = format!("{}", n);
-    let resp: HashMap<String, String> = reqwest::get("https://www.csdn.net")?
-        .json()?;
+    let resp: HashMap<String, String> = reqwest::get("https://www.csdn.net").unwrap()
+        .json().unwrap();
     let s1 = format!("{:#?}", resp);
     CString::new(s1 + recipient)
         .unwrap()
